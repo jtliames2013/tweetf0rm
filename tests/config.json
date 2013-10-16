@@ -24,5 +24,6 @@
 		"port": 6379,
 		"db": 0,
 		"password": "iloveusm"
-	}
+	},
+	"verbose": "True"
 }
