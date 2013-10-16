@@ -19,10 +19,10 @@
 			"oauth_token_secret":"papLkhKwUKS2qZzIYYeKfmDNIxvX4QJHk7kJTIykPdbNx"
 		}
 	},
-	"redis": {
+	"redis_config": {
 		"host": "localhost",
 		"port": 6379,
 		"db": 0,
-		"password": "wh0tever"
+		"password": "iloveusm"
 	}
 }
