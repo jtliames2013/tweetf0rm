@@ -25,5 +25,6 @@
 		"db": 0,
 		"password": "iloveusm"
 	},
-	"verbose": "True"
+	"verbose": "True",
+	"output": "./data"
 }
