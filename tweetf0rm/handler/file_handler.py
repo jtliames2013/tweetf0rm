@@ -30,7 +30,7 @@ def flush_file(output_folder, bucket, items):
 
 	return True
 
-FLUSH_SIZE = 100
+FLUSH_SIZE = 10
 
 class FileHandler(BaseHandler):
 

@@ -25,7 +25,7 @@ def check_config(config):
 
 def tarball_results(data_folder, bucket, output_tarball_foldler, timestamp):
 
-	logger.info("archiving bucket: [%s] at %s"%(bucket, timestamp))
+	#logger.info("archiving bucket: [%s] at %s"%(bucket, timestamp))
 	data_folder = os.path.join(os.path.abspath(data_folder), bucket)
 
 	if (not os.path.exists(data_folder)):
@@ -119,7 +119,7 @@ def start_server(config, proxies):
 	while True:
 		
 		if (time.time() - pre_time > 120):
-			logger.info(pprint.pformat(scheduler.crawler_status()))
+			#logger.info(pprint.pformat(scheduler.crawler_status()))
 			pre_time = time.time()
 			if (scheduler.is_alive()):
 				cmd = {'cmd': 'CRAWLER_FLUSH'}
@@ -127,13 +127,13 @@ def start_server(config, proxies):
 
 		if (time.time() - last_archive_ts > 3600):
 
-			logger.info("start archive procedure...")
+			#logger.info("start archive procedure...")
 			with concurrent.futures.ProcessPoolExecutor(max_workers=len(buckets)) as executor:
 
 				future_proxies = {executor.submit(tarball_results, ouput_folder, bucket, archive_output, int(time.time()) - 3600): bucket for bucket in buckets}
 		
-				for future in future_proxies:
-					future.add_done_callback(lambda f: logger.info("archive created? %s: [%s]"%f.result()))
+				#for future in future_proxies:
+				#	future.add_done_callback(lambda f: logger.info("archive created? %s: [%s]"%f.result()))
 
 			last_archive_ts = time.time()
 

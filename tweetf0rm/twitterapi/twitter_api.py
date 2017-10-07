@@ -371,6 +371,17 @@ class TwitterAPI(twython.Twython):
 
 				#logger.info(cnt)
 
+                                if (len(result_tweets) >= 10000):
+                                    fullkey = key + str(cnt)
+                                    for tweet in result_tweets:
+                                        for handler in write_to_handlers:
+                                            handler.append(json.dumps(tweet), bucket=bucket, key=fullkey)
+                                      
+                                        for handler in cmd_handlers:
+                                            handler.append(json.dumps(tweet), bucket=bucket, key=fullkey)
+                                    logger.info("[%s] total tweets: %d "%(query, cnt))
+                                    result_tweets = []  
+
 				logger.debug('%d > %d ? %s'%(prev_max_id, current_max_id, bool(prev_max_id > current_max_id)))
 
 				time.sleep(1)
@@ -384,16 +395,17 @@ class TwitterAPI(twython.Twython):
 				if (retry_cnt == 0):
 					raise MaxRetryReached("max retry reached due to %s"%(exc))
 
-		if (len(result_tweets) > 0):
+                fullkey = key + str(cnt)
+		if (len(result_tweets) > 0):                        
 			for tweet in result_tweets:
 				for handler in write_to_handlers:
-					handler.append(json.dumps(tweet), bucket=bucket, key=key)
+					handler.append(json.dumps(tweet), bucket=bucket, key=fullkey)
 
 				for handler in cmd_handlers:
-					handler.append(json.dumps(tweet), bucket=bucket, key=key)
+					handler.append(json.dumps(tweet), bucket=bucket, key=fullkey)
 		else:
 			for handler in write_to_handlers:
-				handler.append(json.dumps({}), bucket=bucket, key=key)
+				handler.append(json.dumps({}), bucket=bucket, key=fullkey)
 
 		logger.info("[%s] total tweets: %d "%(query, cnt))
 

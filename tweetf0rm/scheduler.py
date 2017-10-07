@@ -125,11 +125,11 @@ class Scheduler(object):
 		sorted_queues = self.sorted_local_queue(False)
 		max_crawler_id, max_qsize = sorted_queues[-1]
 		min_crawler_id, min_qsize = sorted_queues[0]
-		logger.info("crawler with max_qsize: %s (%d)"%(max_crawler_id, max_qsize))
-		logger.info("crawler with min_qsize: %s (%d)"%(min_crawler_id, min_qsize))
-		logger.info("max_qsize - min_qsize > 0.5 * min_qsize ?: %r"%((max_qsize - min_qsize > 0.5 * min_qsize)))
+		#logger.info("crawler with max_qsize: %s (%d)"%(max_crawler_id, max_qsize))
+		#logger.info("crawler with min_qsize: %s (%d)"%(min_crawler_id, min_qsize))
+		#logger.info("max_qsize - min_qsize > 0.5 * min_qsize ?: %r"%((max_qsize - min_qsize > 0.5 * min_qsize)))
 		if (max_qsize - min_qsize > 0.5 * min_qsize):
-			logger.info("load balancing process started...")
+			#logger.info("load balancing process started...")
 			cmds = []
 			controls = []
 			for i in range(int(0.3 * (max_qsize - min_qsize))):
@@ -143,7 +143,7 @@ class Scheduler(object):
 			for cmd in controls:
 				self.crawlers[max_crawler_id]['crawler_queue'].put(cmd)
 
-			logger.info("redistribute %d cmds"%len(cmds))
+			#logger.info("redistribute %d cmds"%len(cmds))
 			for cmd in cmds:
 				self.enqueue(cmd)
 
